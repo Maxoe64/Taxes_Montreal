@@ -1,0 +1,80 @@
+# Tests de calcul des taxes foncières de Montréal
+# Format: openfisca test
+#
+# Cas de validation basés sur la formule simplifiée:
+#   Taxes = base_imposition × taux_total / 100 + montants_fixes
+#
+# Source des taux: Budget 2026, Ville de Montréal
+# https://montreal.ca/articles/taux-de-taxes-pour-2026-106147
+
+- name: "Résidentiel - Rosemont, condo 500k$ (année 1 du rôle)"
+  period: 2026
+  input:
+    categorie_immeuble: residentiel
+    arrondissement: rosemont_la_petite_patrie
+    valeur_fonciere_role_precedent: 450000
+    valeur_fonciere_role_courant: 500000
+    annee_role: 1
+  output:
+    # Base d'imposition: 450000 + (1/3) × 50000 = 466666.67
+    base_imposition: 466666.67
+    # Taxe foncière générale: 466666.67 × 0.4631 / 100 = 2161.27
+    taxe_fonciere_generale: 2161.27
+    # Taxe ARTM: 466666.67 × 0.0070 / 100 = 32.67
+    taxe_artm: 32.67
+    # Taxe voirie: 466666.67 × 0.0024 / 100 = 11.20
+    taxe_voirie: 11.20
+    # Taxe arrondissement:
+    #   services: 466666.67 × 0.0531 / 100 = 247.80
+    #   investissements: 466666.67 × 0.0308 / 100 = 143.73
+    #   total arrondissement: 391.53
+    taxe_arrondissement: 391.53
+
+
+- name: "Résidentiel - Lachine avec montant fixe, propriété 350k$"
+  period: 2026
+  input:
+    categorie_immeuble: residentiel
+    arrondissement: lachine
+    valeur_fonciere_role_precedent: 320000
+    valeur_fonciere_role_courant: 350000
+    annee_role: 1
+  output:
+    # Base: 320000 + (1/3) × 30000 = 330000
+    base_imposition: 330000.0
+    # Taxe arrondissement:
+    #   services: 330000 × 0.0434 / 100 = 143.22
+    #   investissements: 330000 × 0.0312 / 100 = 102.96
+    #   + montant fixe: 57.91
+    #   total: 304.09
+    taxe_arrondissement: 304.09
+
+
+- name: "Non résidentiel - Ville-Marie, immeuble 1.5M$ (taux différenciés)"
+  period: 2026
+  input:
+    categorie_immeuble: non_residentiel
+    arrondissement: ville_marie
+    valeur_fonciere_role_precedent: 1500000
+    valeur_fonciere_role_courant: 1500000
+    annee_role: 1
+  output:
+    base_imposition: 1500000.0
+    # Taxe foncière générale:
+    #   Tranche 1: 900000 × 2.0084 / 100 = 18075.60
+    #   Tranche 2: 600000 × 2.5719 / 100 = 15431.40
+    #   Total: 33507.00
+    taxe_fonciere_generale: 33507.0
+
+
+- name: "Étalement année 3 - base = valeur courante complète"
+  period: 2026
+  input:
+    categorie_immeuble: residentiel
+    arrondissement: ville_marie
+    valeur_fonciere_role_precedent: 560000
+    valeur_fonciere_role_courant: 620000
+    annee_role: 3
+  output:
+    # Année 3: 560000 + (3/3) × 60000 = 620000
+    base_imposition: 620000.0

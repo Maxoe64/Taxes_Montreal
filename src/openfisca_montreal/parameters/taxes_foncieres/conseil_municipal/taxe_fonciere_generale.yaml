@@ -1,0 +1,53 @@
+description: >-
+  Taux de la taxe foncière générale imposée par le conseil municipal
+  de Montréal. Exprimé en $ par 100 $ de valeur d'évaluation.
+  Source: Budget 2026, Ville de Montréal.
+metadata:
+  reference:
+    - title: Taux de taxes pour 2026
+      href: https://montreal.ca/articles/taux-de-taxes-pour-2026-106147
+    - title: Comment sont calculées les taxes municipales
+      href: https://montreal.ca/articles/comment-sont-calculees-les-taxes-municipales-8962
+
+residentiel:
+  description: Taux résidentiel (catégorie résiduelle, ≤5 logements)
+  values:
+    2025-01-01:
+      value: 0.4780
+    2026-01-01:
+      value: 0.4631
+
+residentiel_6_plus:
+  description: Taux résidentiel pour immeubles de 6 logements ou plus
+  values:
+    2025-01-01:
+      value: 0.4780
+    2026-01-01:
+      value: 0.4631
+
+non_residentiel_tranche_1:
+  description: >-
+    Taux non résidentiel, tranche 1 (valeur ≤ seuil de 900 000 $).
+    Inclut les immeubles commerciaux et mixtes.
+  values:
+    2025-01-01:
+      value: 2.0700
+    2026-01-01:
+      value: 2.0084
+
+non_residentiel_tranche_2:
+  description: >-
+    Taux non résidentiel, tranche 2 (valeur > seuil de 900 000 $).
+  values:
+    2025-01-01:
+      value: 2.6500
+    2026-01-01:
+      value: 2.5719
+
+terrain_vague_desservi:
+  description: Taux pour les terrains vagues desservis
+  values:
+    2025-01-01:
+      value: 1.9100
+    2026-01-01:
+      value: 1.8524
